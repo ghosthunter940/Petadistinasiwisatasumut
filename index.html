@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="./resources/ol.css">
+        <link rel="stylesheet" href="resources/fontawesome-all.min.css">
+        <link href="resources/photon-geocoder-autocomplete.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
+        <link rel="stylesheet" href="./resources/qgis2web.css">
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.3rem;
+        }
+
+        #map-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .ol-control > * {
+            background-color: #ffffff!important;
+            color: #2c3e50!important;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
+            color: #666666!important;
+        }
+
+        .search-layer-input-search {
+            background-color: #ffffff!important;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .search-layer-input-search:focus {
+            border-color: #34495e;
+            box-shadow: 0 0 8px rgba(52, 73, 94, 0.2);
+        }
+
+        .ol-control > *:focus, .ol-control > *:hover {
+            background-color: #f0f0f0!important;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .ol-control {
+            background-color: transparent !important;
+            padding: 8px !important;
+        }
+
+        .ol-popup {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .ol-popup-closer {
+            color: #666;
+            transition: color 0.2s ease;
+        }
+
+        .ol-popup-closer:hover {
+            color: #2c3e50;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            border-top: 1px solid #1a252f;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+        </style>
+
+        <style>
+        </style>
+        <title>QGIS Web Map - Sumatera Utara</title>
+    </head>
+    <body>
+        <header>
+            <h1>🗺️ Peta Interaktif Sumatera Utara</h1>
+            <p>Visualisasi data geografis dengan layer tematik</p>
+        </header>
+
+        <div id="map-container">
+            <div id="map">
+                <div id="popup" class="ol-popup">
+                    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                    <div id="popup-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 QGIS Web Map | Data dari Sumatera Utara</p>
+        </footer>
+
+        <script src="resources/qgis2web_expressions.js"></script>
+        <script src="./resources/functions.js"></script>
+        <script src="./resources/ol.js"></script>
+        <script src="./resources/ol-layerswitcher.js"></script>
+        <script src="resources/photon-geocoder-autocomplete.min.js"></script>
+        <script src="layers/RBI_50K_2023_SumateraUtara_1.js"></script><script src="layers/CAGARBUDAYA_PT_50K_2.js"></script><script src="layers/DANAU_AR_50K_3.js"></script><script src="layers/CAGARBUDAYA_PT_50K_4.js"></script><script src="layers/DANAU_AR_50K_5.js"></script><script src="layers/CAGARBUDAYA_PT_50K_6.js"></script><script src="layers/danautoba_7.js"></script>
+        <script src="styles/RBI_50K_2023_SumateraUtara_1_style.js"></script><script src="styles/CAGARBUDAYA_PT_50K_2_style.js"></script><script src="styles/DANAU_AR_50K_3_style.js"></script><script src="styles/CAGARBUDAYA_PT_50K_4_style.js"></script><script src="styles/DANAU_AR_50K_5_style.js"></script><script src="styles/CAGARBUDAYA_PT_50K_6_style.js"></script><script src="styles/danautoba_7_style.js"></script>
+        <script src="./layers/layers.js" type="text/javascript"></script> 
+        <script src="./resources/Autolinker.min.js"></script>
+        <script src="./resources/qgis2web.js"></script>        
+    </body>
+</html>
