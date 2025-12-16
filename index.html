@@ -11,6 +11,7 @@
         <link href="resources/photon-geocoder-autocomplete.min.css" rel="stylesheet">
         <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
         <link rel="stylesheet" href="./resources/qgis2web.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <style>
         * {
             margin: 0;
@@ -19,8 +20,8 @@
         }
 
         html, body {
-            background-color: #f5f5f5;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
@@ -30,31 +31,102 @@
         }
 
         header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 50%, #8b5cf6 100%);
             color: white;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.2rem 2rem;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            animation: shimmer 15s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         header h1 {
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 1.6rem;
+            font-weight: 700;
             letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         header p {
-            font-size: 0.9rem;
-            opacity: 0.9;
+            font-size: 0.85rem;
+            opacity: 0.95;
             margin-top: 0.3rem;
+            position: relative;
+            z-index: 1;
+            font-weight: 300;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            padding: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            object-fit: contain;
+        }
+
+        .header-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: pulse 2s infinite;
+            text-align: center;
+        }
+
+        .header-badge .student-info {
+            font-size: 0.7rem;
+            opacity: 0.9;
+            margin-top: 0.2rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
         }
 
         #map-container {
             flex: 1;
             position: relative;
             overflow: hidden;
+            border-top: 3px solid rgba(99, 102, 241, 0.5);
         }
 
-        html, body, #map {
+        #map {
             width: 100%;
             height: 100%;
             padding: 0;
@@ -62,32 +134,20 @@
         }
 
         .ol-control > * {
-            background-color: #ffffff!important;
-            color: #2c3e50!important;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            border: 1px solid #e0e0e0;
-        }
-
-        .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
-            color: #666666!important;
-        }
-
-        .search-layer-input-search {
-            background-color: #ffffff!important;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .search-layer-input-search:focus {
-            border-color: #34495e;
-            box-shadow: 0 0 8px rgba(52, 73, 94, 0.2);
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+            color: #1e293b !important;
+            border-radius: 12px !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            font-weight: 500;
         }
 
         .ol-control > *:focus, .ol-control > *:hover {
-            background-color: #f0f0f0!important;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+            color: white !important;
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
         }
 
         .ol-control {
@@ -95,44 +155,232 @@
             padding: 8px !important;
         }
 
+        .ol-zoom {
+            top: 1rem;
+            left: 1rem;
+        }
+
+        .ol-zoom button {
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 1.2rem !important;
+            margin: 2px 0 !important;
+        }
+
+        .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
+            color: #64748b !important;
+        }
+
+        .search-layer-input-search {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+            border: 2px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            transition: all 0.3s ease;
+            padding: 12px 16px !important;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .search-layer-input-search:focus {
+            border-color: #6366f1 !important;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+            outline: none;
+        }
+
         .ol-popup {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 0;
+            overflow: hidden;
+            animation: popupFade 0.3s ease;
+        }
+
+        @keyframes popupFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ol-popup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #6366f1, #8b5cf6);
         }
 
         .ol-popup-closer {
-            color: #666;
-            transition: color 0.2s ease;
+            color: #64748b;
+            transition: all 0.2s ease;
+            font-size: 1.2rem;
+            padding: 8px;
         }
 
         .ol-popup-closer:hover {
-            color: #2c3e50;
+            color: #6366f1;
+            transform: rotate(90deg);
+        }
+
+        #popup-content {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+
+        /* Layer Switcher Styling */
+        .layer-switcher {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+        }
+
+        .layer-switcher button {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+            border-radius: 12px !important;
+        }
+
+        .layer-switcher ul {
+            padding: 1rem !important;
+        }
+
+        .layer-switcher li {
+            color: #e2e8f0 !important;
+            padding: 0.5rem !important;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .layer-switcher li:hover {
+            background: rgba(99, 102, 241, 0.2);
         }
 
         footer {
-            background-color: #2c3e50;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             color: white;
             padding: 1rem 2rem;
             text-align: center;
-            font-size: 0.85rem;
-            border-top: 1px solid #1a252f;
+            font-size: 0.8rem;
+            border-top: 3px solid rgba(99, 102, 241, 0.5);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0ea5e9, #6366f1, #8b5cf6);
         }
 
         footer p {
             opacity: 0.9;
+            font-weight: 300;
+        }
+
+        footer a {
+            color: #8b5cf6;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        footer a:hover {
+            color: #a78bfa;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            padding: 2px;
+            object-fit: contain;
+        }
+
+        .footer-student {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-dot {
+            width: 4px;
+            height: 4px;
+            background: #6366f1;
+            border-radius: 50%;
+        }
+
+        /* Loading animation */
+        #map::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            margin: -25px 0 0 -25px;
+            border: 4px solid rgba(99, 102, 241, 0.2);
+            border-top-color: #6366f1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            header h1 {
+                font-size: 1.2rem;
+            }
+            .header-badge {
+                display: none;
+            }
         }
         </style>
 
         <style>
         </style>
-        <title>QGIS Web Map - Sumatera Utara</title>
+        <title>🗺️ Peta Destinasi Wisata Sumatera Utara</title>
     </head>
     <body>
         <header>
-            <h1>🗺️ Peta Interaktif Sumatera Utara</h1>
-            <p>Visualisasi data geografis dengan layer tematik</p>
+            <div class="header-content">
+                <div class="header-left">
+                    <img src="logo usu untuk semua.png" alt="Logo USU" class="header-logo">
+                    <div>
+                        <h1>🗺️ Peta Interaktif Sumatera Utara</h1>
+                        <p>Visualisasi data geografis destinasi wisata dengan layer tematik</p>
+                    </div>
+                </div>
+                <div class="header-badge">
+                    <span>🟢 Live Map</span>
+                    <div class="student-info">
+                        <strong>Gonter Munte</strong><br>
+                        231712050
+                    </div>
+                </div>
+            </div>
         </header>
 
         <div id="map-container">
@@ -145,13 +393,24 @@
         </div>
 
         <footer>
-            <p>&copy; 2025 QGIS Web Map | Data dari Sumatera Utara</p>
+            <div class="footer-content">
+                <div class="footer-student">
+                    <img src="logo usu untuk semua.png" alt="Logo USU" class="footer-logo">
+                    <p><strong>Gonter Munte</strong> | 231712050</p>
+                </div>
+                <div class="footer-dot"></div>
+                <p>Universitas Sumatera Utara</p>
+                <div class="footer-dot"></div>
+                <p>© 2025 Peta Destinasi Wisata</p>
+                <div class="footer-dot"></div>
+                <p>Dibuat dengan ❤️</p>
+            </div>
         </footer>
 
         <script src="resources/qgis2web_expressions.js"></script>
         <script src="./resources/functions.js"></script>
         <script src="./resources/ol.js"></script>
-        <script src="./resources/ol-layerswitcher.js"></script>
+        <script src="./resources/ol-layersswitcher.js"></script>
         <script src="resources/photon-geocoder-autocomplete.min.js"></script>
         <script src="layers/RBI_50K_2023_SumateraUtara_1.js"></script><script src="layers/CAGARBUDAYA_PT_50K_2.js"></script><script src="layers/DANAU_AR_50K_3.js"></script><script src="layers/CAGARBUDAYA_PT_50K_4.js"></script><script src="layers/DANAU_AR_50K_5.js"></script><script src="layers/CAGARBUDAYA_PT_50K_6.js"></script><script src="layers/danautoba_7.js"></script>
         <script src="styles/RBI_50K_2023_SumateraUtara_1_style.js"></script><script src="styles/CAGARBUDAYA_PT_50K_2_style.js"></script><script src="styles/DANAU_AR_50K_3_style.js"></script><script src="styles/CAGARBUDAYA_PT_50K_4_style.js"></script><script src="styles/DANAU_AR_50K_5_style.js"></script><script src="styles/CAGARBUDAYA_PT_50K_6_style.js"></script><script src="styles/danautoba_7_style.js"></script>
